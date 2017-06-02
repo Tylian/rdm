@@ -378,17 +378,6 @@ const actions = {
   }
 };
 
-/*
-.badge-purple {
-  background-color: #9c43b9;
-}
-.badge-brown {
-  background-color: #776851;
-}
-.badge-red {
-  background-color: #880000;
-}
-*/
 const statuses = {
   dualcast: {
     name: "Dualcast",
