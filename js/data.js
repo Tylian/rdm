@@ -222,7 +222,7 @@ const actions = {
       function lower() {
         state.emboldenDamage -= 0.04;
         if(state.emboldenDamage > 0) {
-          setTimer(lower, 4000);
+          addTimer(lower, 4000);
         } else {
           state.emboldenDamage = 0;
         }
