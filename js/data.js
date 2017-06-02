@@ -1,4 +1,5 @@
 const defaultAction = {
+  name: "Skill",
   cast: 2,
   recast: 2.5,
   white: 0,
