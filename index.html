@@ -1,0 +1,106 @@
+<!--
+
+
+  S T O P
+  DO NOT LOOK AT THE CODE
+
+  IT'S A FUCKING DISASTER AND I'M SORRY I EVEN ATTEMPTED THIS
+  HERE BE DRAGONS AND SHIT
+
+  DO NOT LOOK I BEG OF YOU
+  ;____________________;
+
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Completely Official* 100% Accurate* RDM Simulation*</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="info">
+    <strong>Balance Gauge:</strong> <span class="gauge">0 White / 0 Black</span>
+    <div class="progress progress-gauge">
+        <div class="progress-bar bg-white" style="width: 0%">0</div>
+        <div class="progress-bar bg-black" style="width: 0%">0 </div>
+    </div>
+    <br />
+
+    <strong>Mana:</strong> <span class="mana">14400 / 14400</span>
+    <div class="progress progress-mana">
+      <div class="progress-bar"></div>
+    </div><br />
+
+    <!--Range: <span class="range">10</span><br />-->
+    <strong>Potency:</strong> <span class="pps">0.00</span>/s <strong>DPS<span title="Estimated based on damage shown in videos, doesn't simulate direct hits or criticals" style="cursor: help;">*</span>:</strong> <span class="dps">0.00</span>/s <button id="potreset" class="btn btn-sm">reset</button><br />
+    <label title="Realtime mode: When unchecked, time won't advance unless the GCD is active or you're casting a spell."><input type="checkbox" checked id="realtime" /> Realtime Mode</label>
+
+    <div class="casting">
+      <strong>Casting:</strong> <span class="cast">0.00s</span>
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+
+    <div class="statuses">
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="actions">
+      <div class="action-row cooldown-row">
+        <button data-action="corps_a_corps"><img src="img/corps_a_corps.png" /><small></small></button>
+        <button data-action="displacement"><img src="img/displacement.png" /><small></small></button>
+        <button data-action="acceleration"><img src="img/acceleration.png" /><small></small></button>
+        <button data-action="manafication"><img src="img/manafication.png" /><small ></small></button>
+        <button data-action="embolden"><img src="img/embolden.png" /><small ></small></button>
+        <button data-action="swiftcast"><img src="img/swiftcast.png" /><small ></small></button>
+        <button data-action="fleche"><img src="img/fleche.png" /><small ></small></button>
+        <button data-action="contre_sixte"><img src="img/contre_sixte.png" /><small ></small></button>
+        <button data-action="lucid_dreaming"><img src="img/lucid_dreaming.png" /><small></small></button>
+      </div>
+      <div class="action-row">
+        <button data-action="verholy"><img src="img/verholy.png" /><small></small></button>
+        <button data-action="verflare"><img src="img/verflare.png" /><small></small></button>
+        <button data-action="riposte"><img src="img/riposte.png" /><small></small></button>
+        <button data-action="zwerchhau"><img src="img/zwerchhau.png" /><small></small></button>
+        <button data-action="redoublement"><img src="img/redoublement.png" /><small></small></button>
+      </div>
+      <div class="action-row">
+        <button data-action="jolt2"><img src="img/jolt2.png" /><small></small></button>
+        <button data-action="impact"><img src="img/impact.png" /><small></small></button>
+        <button data-action="veraero"><img src="img/veraero.png" /><small></small></button>
+        <button data-action="verstone"><img src="img/verstone.png" /><small></small></button>
+        <button data-action="verthunder"><img src="img/verthunder.png" /><small></small></button>
+        <button data-action="verfire"><img src="img/verfire.png" /><small></small></button>
+        <button data-action="vercure"><img src="img/vercure.png" /><small></small></button>
+      </div>
+    </div>
+
+    <br /><br />
+
+    <label title="Press to assign keybinds to skills"><input type="checkbox" id="hotkey" /> Keybind Mode</label>
+    <div class="keybind-help">
+      You are in Keybind Mode.<br />
+      While in Keybind Mode you can press a skill to highlight it.<br />
+      After highlighting a skill, you can press any keybind and it'll bind that key to that skill.<br />
+      Modifier keys (alt, ctrl, shift) are accepted.
+    </div>
+  </div>
+
+  <div class="footer">
+    (Butchered by <a href="http://na.finalfantasyxiv.com/lodestone/character/6412758/">Tylian Foxfire of Exodus</a>. I'm sorry this exists.)
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/data.js"></script>
+  <script type="text/javascript" src="js/lib.js"></script>
+  <script type="text/javascript" src="js/simulator.js"></script>
+</body>
+</html>

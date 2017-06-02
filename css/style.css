@@ -1,0 +1,140 @@
+.active {
+  color: red;
+  visibility: visible !important;
+}
+
+.casting {
+  visibility: hidden;
+  margin: 0.5em 0;
+}
+
+.actions {
+  margin-top: 0.5em;
+}
+
+.casting .progress-bar {
+  text-align: left;
+  text-indent: 2em;
+}
+
+.statuses {
+    height: 24px;
+}
+.statuses .badge {
+  margin: 0 2px;
+}
+
+.action-row {
+  margin-bottom: 0.5em;
+}
+
+/*.cooldown-row button {
+    height: 58px;
+}
+
+.cooldown-row small {
+  display: block;
+}*/
+
+.progress-gauge {
+  flex-flow: column;
+}
+
+.container {
+  width: 1024px;
+}
+
+.info {
+  width: 800px;
+  margin: 0 auto;
+  margin-top: 1em;
+}
+
+.bg-white {
+  background-color: #dcdcac;
+  color: #333;
+}
+
+.bg-black {
+  background-color: #742d98;
+}
+
+.progress-gauge .progress-bar, .progress-mana .progress-bar {
+  transition: width 0.3s ease-in ;
+}
+
+/*.action-melee {
+  width: 200px;
+  line-height: 0.75;
+  height: 38px;
+}*/
+
+.imbalance-white {
+    background-color: #eaecd2;
+}
+.imbalance-black {
+    background-color: #bba1bb;
+}
+
+.container {
+  text-align: center;
+}
+
+
+.progress-gcd {
+  display: inline-block;
+  width: 100px;
+  height: 7px;
+}
+
+.footer {
+  margin-top: 6em;
+  font-size: 0.65em;
+  text-align: center;
+}
+
+.footer a {
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.actions button {
+  padding: 0;
+  background: transparent;
+  border: 2px dashed transparent;
+  position: relative;
+}
+
+.actions button.highlight {
+  border-color: #d0a21a;
+}
+
+.actions button:disabled img {
+  opacity: 0.3;
+}
+
+.actions button > small {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 0 2px black, 0 0 2px black;
+    font-weight: bold;
+    color: #fff;
+}
+
+.hotkey {
+  border: 2px solid red !important;
+}
+
+.keybind-help {
+  display: none;
+}
+
+.hotkey-mode .keybind-help {
+  display: block;
+}
