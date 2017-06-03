@@ -72,12 +72,14 @@ body {
   line-height: 0.75;
   height: 38px;
 }*/
-
+.mana-balance {
+    background-color: #ffc0cb;
+}
 .imbalance-white {
-    background-color: #eaecd2;
+    background-color: #eaecd2 !important;
 }
 .imbalance-black {
-    background-color: #bba1bb;
+    background-color: #bba1bb !important;
 }
 
 .container {

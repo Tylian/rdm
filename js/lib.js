@@ -132,6 +132,7 @@ function setGauge(black, white) {
 
   $(".progress-gauge").toggleClass("imbalance-black", state.gauge.black >= state.gauge.white + 30);
   $(".progress-gauge").toggleClass("imbalance-white", state.gauge.white >= state.gauge.black + 30);
+  $(".progress-gauge").toggleClass("mana-balance", state.gauge.white >= 30 && state.gauge.black >= 30);
 }
 
 // updates all action buttons state to be correct
