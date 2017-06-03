@@ -10,7 +10,6 @@ function addTimer(fn, delay, repeating) {
 
 // remove a once-off timer before it fires
 function removeTimer(id) {
-  console.log(state.timers[id]);
   if(typeof state.timers[id] == "object")
     state.timers[id] = null;
 }
@@ -46,17 +45,14 @@ function hasStatus(name) {
 // sets a status as active/inactive
 function setStatus(name, active) {
   var status = statuses[name];
-  console.log(`setStatus("${name}", ${active});`)
 
   // add, or remove it?
   if(active) {
     // if we have the status already, just update it
     if(!hasStatus(name)) {
-      console.log("Adding status");
-      var el = $(`<span class="badge" data-status="${name}" title="${status.description}" style="background-color: ${status.color};">${status.name}<br /><small>${status.duration}s</small></span>`);
+      var el = $(`<span class="badge" data-status="${name}" title="${status.description}" style="background-color: ${status.color};"><span>${status.name}</span><br /><small>${status.duration}s</small></span>`);
       el.appendTo('.statuses');
     } else {
-      console.log("Reusing status");
       var el = $(`.badge[data-status="${name}"]`);
       removeTimer(state.statusTimers[name]);
     }

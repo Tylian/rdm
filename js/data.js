@@ -226,6 +226,8 @@ const actions = {
         } else {
           state.emboldenDamage = 0;
         }
+        var roman = ["I", "II", "III", "IV", "V"];
+        $("[data-status=\"embolden\"] span").text(`Embolden ${roman[Math.floor(state.emboldenDamage / 0.04)]}`)
       }
 
       state.emboldenDamage = 0.24;
@@ -410,7 +412,7 @@ const statuses = {
     description: "Next spell is cast immediately."
   },
   embolden: {
-    name: "Embolden",
+    name: "Embolden V",
     duration: 20,
     color: "#f0ad4e",
     description: "Magic damage is increased."
