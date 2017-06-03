@@ -227,7 +227,7 @@ const actions = {
           state.emboldenDamage = 0;
         }
         var roman = ["I", "II", "III", "IV", "V"];
-        $("[data-status=\"embolden\"] span").text(`Embolden ${roman[Math.floor(state.emboldenDamage / 0.04)]}`)
+        $("[data-status=\"embolden\"] img").prop("src", `img/status/embolden${Math.floor(state.emboldenDamage / 0.04) + 1}.png`)
       }
 
       state.emboldenDamage = 0.24;
@@ -384,49 +384,41 @@ const statuses = {
   dualcast: {
     name: "Dualcast",
     duration: 15,
-    color: "#9c43b9",
     description: "Next spell is cast immediately."
   },
   impact: {
     name: "Impactful",
     duration: 30,
-    color: "#636c72",
     description: "Impact is usable."
   },
   verfire: {
     name: "Verfire Ready",
     duration: 30,
-    color: "#880000",
     description: "Verfire is usable."
   },
   verstone: {
     name: "Verstone Ready",
     duration: 30,
-    color: "#776851",
     description: "Verstone is usable."
   },
   swiftcast: {
     name: "Swiftcast",
     duration: 10,
-    color: "#636c72",
     description: "Next spell is cast immediately."
   },
   embolden: {
     name: "Embolden V",
     duration: 20,
-    color: "#f0ad4e",
     description: "Magic damage is increased."
   },
   acceleration: {
     name: "Acceleration",
     duration: 10,
-    color: "#636c72",
     description: "Next Veraero or Verthunder will grant Verstone Ready or Verfire Ready, respectively."
   },
   lucid_dreaming:  {
     name: "Lucid Dreaming",
     duration: 21,
-    color: "#9c43b9",
     description: "Gradually restoring MP over time."
   }
 };

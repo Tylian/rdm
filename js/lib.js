@@ -50,10 +50,10 @@ function setStatus(name, active) {
   if(active) {
     // if we have the status already, just update it
     if(!hasStatus(name)) {
-      var el = $(`<span class="badge" data-status="${name}" title="${status.description}" style="background-color: ${status.color};"><span>${status.name}</span><br /><small>${status.duration}s</small></span>`);
+      var el = $(`<div class="status" data-status="${name}" title="${status.description}"><img src="img/status/${name}.png"<br /><small>${status.duration}s</small></span>`);
       el.appendTo('.statuses');
     } else {
-      var el = $(`.badge[data-status="${name}"]`);
+      var el = $(`.status[data-status="${name}"]`);
       removeTimer(state.statusTimers[name]);
     }
 
@@ -75,7 +75,7 @@ function setStatus(name, active) {
     removeTimer(state.statusTimers[name]);
     delete state.statuses[name];
     delete state.statusTimers[name];
-    $(`.badge[data-status="${name}"]`).remove();
+    $(`.status[data-status="${name}"]`).remove();
     updateActions();
   }
 }
