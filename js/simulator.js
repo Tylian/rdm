@@ -35,9 +35,9 @@ function action(name) {
   if(action.type != "ability") {
     // remove dualcast/swiftcast status, priority being swiftcast
     if(hasStatus("swiftcast")) {
-      setStatus('swiftcast', false);
+      setStatus("swiftcast", false);
     } else {
-      setStatus('dualcast', false);
+      setStatus("dualcast", false);
     }
 
     // Set the cast/resast state for both error checking and UI
@@ -85,7 +85,9 @@ function action(name) {
     state.damage += action.getPotency() * 18 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
 
     // give dualcast if we casted a thing
-    setStatus('dualcast', action.type == "spell" && castTime > 0);
+    if(action.type == "spell" && castTime > 0) {
+      setStatus('dualcast', true);
+    }
 
     // update UI
     setMana(state.mana - action.mana);
