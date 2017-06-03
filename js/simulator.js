@@ -183,6 +183,10 @@ addTimer(() => {
   updateActions();
 }, 3000, true);
 
+
+state.realtimeMode = localStorage["rdmrealtime"] != "off";
+$("#realtime").prop("checked", state.realtimeMode);
+
 loadHotkeys(); // load hotkeys
 setGauge(0, 0); // reset state
 setMana(14400)
@@ -220,7 +224,8 @@ $("#hotkey").click(function(e) {
 
 // Realtime toggle
 $("#realtime").click(function(e) {
-  state.realtimeMode = $(this).is(':checked');
+  state.realtimeMode = $(this).is(":checked");
+  localStorage["rdmrealtime"] = state.realtimeMode ? "on" : "off";
 });
 
 // Hotkey handler

@@ -1,5 +1,9 @@
+body {
+  color: #fff;
+  background-color: #292b2c;
+}
+
 .active {
-  color: red;
   visibility: visible !important;
 }
 
@@ -113,7 +117,7 @@
 }
 
 .actions button:disabled img {
-  opacity: 0.3;
+  filter: grayscale(20%) contrast(60%) brightness(60%);
 }
 
 .actions button > small {

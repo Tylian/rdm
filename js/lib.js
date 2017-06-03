@@ -19,9 +19,9 @@ function removeTimer(id) {
 function setMana(mana) {
   state.mana = Math.min(mana, state.maxMana);
   $(".progress-mana .progress-bar").css({
-    width: `${mana/state.maxMana*100}%`
+    width: `${state.mana/state.maxMana*100}%`
   });
-  $(".mana").text(`${mana} / ${state.maxMana}`);
+  $(".mana").text(`${state.mana} / ${state.maxMana}`);
 }
 
 // gets an action's information by name, handling any transforms
@@ -94,7 +94,7 @@ function actionUsable(key) {
 
   // trying to use an ability while it's on cooldown
   if(action.type == "ability") {
-    var time = state.cooldowns[name];
+    var time = state.cooldowns[action.id];
     if(!isNaN(parseInt(time, 10)) && state.currentTime < time)
       return false;
   }
