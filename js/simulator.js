@@ -81,7 +81,7 @@ function action(name) {
     }
 
     // update DPS
-    state.potency += action.getPotency();
+    state.potency += action.getPotency() * (1 + state.emboldenDamage);
     state.damage += action.getPotency() * 18 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
 
     // give dualcast if we casted a thing
