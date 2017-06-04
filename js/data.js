@@ -249,7 +249,7 @@ const actions = {
     name: "Lucid Dreaming",
     type: "ability",
     cast: 0,
-    recast: 60,
+    recast: 120,
     description: "Reduces enmity by half.\nAdditional Effect: Refresh\nRefresh Potency: 80\nDuration: 21s",
     execute() {
       setStatus("lucid_dreaming", true);
