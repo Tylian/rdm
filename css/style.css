@@ -151,3 +151,30 @@ body {
 .hotkey-mode .keybind-help {
   display: block;
 }
+
+.visualisation {
+  background: #1d1d1d;
+  margin: -50px auto 30px auto;
+  padding: 50px;
+  width: 800px;
+  display: inline-block;
+  border: 1px solid #969696;
+  border-radius: 20px;
+}
+
+.dummy {
+  margin-left: 50px;
+  float:left;
+}
+
+.rdm {
+  margin-right: 50px;
+  margin-top: 25px;
+  position: absolute;
+  right: 160px;
+  transition: all 300ms ease;
+}
+
+.melee {
+  transform: translateX(-350px);
+}
