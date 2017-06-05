@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com/css?family=Rosarivo:400i" rel="stylesheet">
 </head>
 <body>
-  <div class="info">
+  <div class="container info">
     <strong>Balance Gauge:</strong> <span class="gauge">0 White / 0 Black</span>
     <div class="progress progress-gauge">
         <div class="progress-bar bg-white" style="width: 0%">0</div>
@@ -39,16 +39,6 @@
     <!--Range: <span class="range">10</span><br />-->
     <strong>Potency:</strong> <span class="pps">0.00</span>/s <strong>DPS<span title="Estimated based on damage shown in videos, doesn't simulate direct hits or criticals" style="cursor: help;">*</span>:</strong> <span class="dps">0.00</span>/s <button id="potreset" class="btn btn-sm">reset</button><br />
     <label title="Realtime mode: When unchecked, time won't advance unless the GCD is active or you're casting a spell."><input type="checkbox" checked id="realtime" /> Realtime Mode</label>
-
-    <div class="casting">
-      <strong>Casting:</strong> <span class="cast">0.00s</span>
-      <div class="progress">
-        <div class="progress-bar"></div>
-      </div>
-    </div>
-
-    <div class="statuses">
-    </div>
   </div>
 
   <div class="container">
@@ -56,10 +46,23 @@
       <!-- <strong>Visualisation</strong> -->
       <img class="dummy" src="img/visualisation/Training_dummy.png">
       <img class="rdm" src="img/visualisation/Red_mage.png">
+
+      <div class="casting">
+        <img class="icon" src="" />
+        <div class="cast-info">
+          <div class="name"></div>
+          <div class="progress">
+            <div class="progress-bar"></div>
+          </div>
+          <strong>Casting:</strong> <span class="cast">0.00s</span>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="container">
+    <div class="statuses">
+    </div>
     <div class="actions">
       <div class="action-row cooldown-row">
         <button data-action="corps_a_corps"><img src="img/corps_a_corps.png" /><small></small></button>

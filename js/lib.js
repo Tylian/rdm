@@ -16,13 +16,7 @@ function removeTimer(id) {
 
 function setMelee(active) {
   state.melee = active;
-
-  var rdmImg = $(".rdm");
-  if (state.melee === true) {
-    rdmImg.addClass('melee');
-  } else {
-    rdmImg.removeClass('melee');
-  }
+  $(".rdm").toggleClass("melee", active);
 }
 
 // sets the current mana and updates UI

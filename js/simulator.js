@@ -24,15 +24,13 @@ var state = {
   realtimeMode: true,
 };
 
-let visualisationDiv = $('.visualisation');
-
-function createDamageText(damageValue) {
-  const node = document.createElement("span");
-  node.className = "damage-text";
-  const value = document.createTextNode(damageValue);
-  node.appendChild(value);
-  return node;
+function preCache(src) {
+  var img = new Image();
+  img.src = src;
 }
+
+preCache("img/visualisation/Red_mage1.png");
+preCache("img/visualisation/Red_mage2.png");
 
 // Attempts to use an action by id
 function action(name) {
@@ -54,7 +52,7 @@ function action(name) {
     // Set the cast/resast state for both error checking and UI
     state.recast.start = state.currentTime;
     state.recast.end = state.recast.start + action.recast * 1000;
-    state.cast.action = action.name;
+    state.cast.action = action.id;
     state.cast.start = state.currentTime;
     state.cast.end = state.cast.start + castTime * 1000;
 
@@ -100,11 +98,14 @@ function action(name) {
     let damage = action.getPotency() * 18.17 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
     state.damage += damage;
 
-    if (damage > 0) {
-      let damageNode = createDamageText(Math.floor(damage));
-      visualisationDiv.append(damageNode)
+    if(damage > 0) {
+      var damageNode = $(`<span class="damage-text">${Math.floor(damage)}</span>`);
+      damageNode.css({
+        left: Math.floor(Math.random() * 100) + 120,
+      });
+      damageNode.appendTo(".visualisation");
       setTimeout(() => {
-        damageNode.remove()
+        damageNode.remove();
       }, 1300);
     }
 
@@ -114,7 +115,7 @@ function action(name) {
     }
 
     // update UI
-    $(".rdm").prop("src", `img/visualisation/Red_mage.png`);
+    $(".rdm").prop("src", "img/visualisation/Red_mage.png");
     setMana(state.mana - action.mana);
     setGauge(state.gauge.black + black, state.gauge.white + white);
     updateActions();
@@ -139,14 +140,15 @@ function timer() {
   const globalCooldown = state.currentTime < state.recast.end;
 
   // show/hide cast bar
-  $('.casting').toggleClass("active", casting);
+  $('.casting').toggle(casting);
 
   // update casting ui
   if(casting) {
     var castPercent = (state.currentTime - state.cast.start) / (state.cast.end - state.cast.start);
-
-    $(".cast").text(`${((state.currentTime - state.cast.start) / 1000).toFixed(2)}s`);
-    $(".casting .progress-bar").text(state.cast.action);
+    var action = getAction(state.cast.action);
+    $(".cast").text(`${((state.cast.end - state.currentTime) / 1000).toFixed(2)}s`);
+    $(".casting .icon").prop("src", `img/${action.id}.png`);
+    $(".casting .name").text(action.name);
     $(".casting .progress-bar").css({
       width: `${castPercent * 100}%`
     });

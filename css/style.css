@@ -1,35 +1,68 @@
+@keyframes fade {
+  0% {
+    transform: translate(-50%, 30px);
+  }
+  100% {
+    transform: translate(-50%, -50px);
+  }
+  0%,100% { opacity: 0 }
+  50% { opacity: 1 }
+}
+
 body {
   color: #fff;
   background-color: #292b2c;
-  font-family: 'Rosarivo';
 }
 
 .active {
   visibility: visible !important;
 }
 
-.casting {
-  visibility: hidden;
-  margin: 0.5em 0;
-}
-
 .actions {
   margin-top: 0.5em;
 }
 
-.casting .progress-bar {
-  text-align: left;
-  text-indent: 2em;
+.statuses {
+  margin-top: 0.5em;
+  height: 50px;
+  text-align: center;
 }
 
-.statuses {
-    height: 50px;
-    text-align: center;
-}
 .status {
   margin: 0 2px;
   display: inline-block;
   text-align: center;
+}
+
+.casting {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.casting .progress-bar {
+  background-color: #800;
+  height: 10px;
+}
+
+.casting .cast-info {
+  flex: 1;
+  text-align: left;
+}
+
+.casting .icon {
+    width: 40px;
+    height: 40px;
+    align-self: center;
+    margin-right: 8px;
+}
+
+.casting .cast {
+  float: right;
 }
 
 .status small {
@@ -60,6 +93,7 @@ body {
   width: 800px;
   margin: 0 auto;
   margin-top: 1em;
+  text-align: left !important;
 }
 
 .bg-white {
@@ -154,8 +188,8 @@ body {
 }
 
 .visualisation {
+  position: relative;
   background: #1d1d1d;
-  margin: -50px auto 30px auto;
   padding: 50px;
   width: 800px;
   display: inline-block;
@@ -172,7 +206,7 @@ body {
   margin-right: 50px;
   margin-top: 25px;
   position: absolute;
-  right: 160px;
+  right: 50px;
   -webkit-transition: all 300ms ease;
   transition: all 300ms ease;
 }
@@ -181,24 +215,12 @@ body {
   transform: translateX(-350px);
 }
 
-@keyframes fade {
-  0% {
-    top: -270px;
-  }
-  100% {
-    top: -350px;
-  }
-  0%,100% { opacity: 0 }
-  50% { opacity: 1 }
-}
-
 .damage-text {
   position: absolute;
-  left: 310px;
   color: #ecddd8;
-  font-size: 40px;
+  font: 40px 'Rosarivo';
   -webkit-text-stroke: 0.3px orange;
-  transform: translateY(300px);
+  transform: translate(-50%, 0);
   -webkit-animation: fade 1.3s; /* Safari, Chrome and Opera > 12.1 */
    -moz-animation: fade 1.3s; /* Firefox < 16 */
     -ms-animation: fade 1.3s; /* Internet Explorer */
