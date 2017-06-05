@@ -232,6 +232,15 @@ $("#realtime").click(function(e) {
 
 // Hotkey handler
 $(document).keydown(function(e) {
+  // block shift, alt and ctrl
+  if([16, 17, 18].includes(e.which))
+    return true;
+
+  // esc - cancel cast
+  if(which == 27) {
+    // todo
+  }
+
   var which = e.which.toString() + (e.altKey ? "a" : "") + (e.shiftKey ? "s" : "") + (e.ctrlKey ? "c" : "");
   if(state.hotkeyMode && state.hotkeySkill != "") {
     state.hotkeys[which] = state.hotkeySkill;
