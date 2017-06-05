@@ -17,11 +17,11 @@ function removeTimer(id) {
 function setMelee(active) {
   state.melee = active;
 
-  var rdmImg = document.getElementsByClassName('rdm')[0];
+  var rdmImg = $(".rdm");
   if (state.melee === true) {
-    rdmImg.className += ' melee';
+    rdmImg.addClass('melee');
   } else {
-    rdmImg.className = 'rdm';
+    rdmImg.removeClass('melee');
   }
 }
 

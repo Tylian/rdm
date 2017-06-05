@@ -24,7 +24,7 @@ var state = {
   realtimeMode: true,
 };
 
-let visualisationDiv = document.getElementsByClassName('visualisation')[0];
+let visualisationDiv = $('.visualisation');
 
 function createDamageText(damageValue) {
   const node = document.createElement("span");
@@ -102,9 +102,9 @@ function action(name) {
 
     if (damage > 0) {
       let damageNode = createDamageText(Math.floor(damage));
-      visualisationDiv.appendChild(damageNode)
+      visualisationDiv.append(damageNode)
       setTimeout(() => {
-        visualisationDiv.removeChild(damageNode)
+        damageNode.remove()
       }, 1300);
     }
 
