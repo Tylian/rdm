@@ -24,6 +24,16 @@ var state = {
   realtimeMode: true,
 };
 
+let visualisationDiv = document.getElementsByClassName('visualisation')[0];
+
+function createDamageText(damageValue) {
+  const node = document.createElement("span");
+  node.className = "damage-text";
+  const value = document.createTextNode(damageValue);
+  node.appendChild(value);
+  return node;
+}
+
 // Attempts to use an action by id
 function action(name) {
   if(!actionUsable(name))
@@ -86,7 +96,17 @@ function action(name) {
 
     // update DPS
     state.potency += action.getPotency() * (1 + state.emboldenDamage);
-    state.damage += action.getPotency() * 18.17 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
+
+    let damage = action.getPotency() * 18.17 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
+    state.damage += damage;
+
+    if (damage > 0) {
+      let damageNode = createDamageText(Math.floor(damage));
+      visualisationDiv.appendChild(damageNode)
+      setTimeout(() => {
+        visualisationDiv.removeChild(damageNode)
+      }, 1300);
+    }
 
     // give dualcast if we casted a thing
     if(action.type == "spell" && castTime > 0) {
