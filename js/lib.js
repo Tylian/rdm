@@ -14,6 +14,17 @@ function removeTimer(id) {
     state.timers[id] = null;
 }
 
+function setMelee(active) {
+  state.melee = active;
+
+  var rdmImg = $(".rdm");
+  if (state.melee === true) {
+    rdmImg.addClass('melee');
+  } else {
+    rdmImg.removeClass('melee');
+  }
+}
+
 // sets the current mana and updates UI
 function setMana(mana) {
   state.mana = Math.min(mana, state.maxMana);

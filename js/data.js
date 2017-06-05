@@ -177,7 +177,7 @@ const actions = {
     potency: 130,
     description: "Rushes towards target and deals unaspected damage with a potency of 130.",
     execute() {
-      // setMelee(true);
+      setMelee(true);
     }
   },
   displacement: {
@@ -189,7 +189,7 @@ const actions = {
     melee: true,
     description: "Delivers an attack with a potency of 130.\nAdditional Effect: 10-yalm backstep",
     execute() {
-      // setMelee(false);
+      setMelee(false);
     }
   },
   acceleration: {
