@@ -205,7 +205,9 @@ setInterval(() => {
     }
   });
 
-  $(".time").text(`${((state.currentTime - state.damageStart) / 1000).toFixed(1)}s`)
+  if(state.damageStart != -1) {
+    $(".time").text(`${((state.currentTime - state.damageStart) / 1000).toFixed(1)}s`)
+  }
 }, 100);
 
 // 3s server tick timer
