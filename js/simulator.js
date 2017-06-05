@@ -2,6 +2,7 @@ var state = {
   recast: { start: 0, end: 0 },
   cast: { action: "", start: 0, end: 0 },
   lastAction: "",
+  lastCombo: false,
   gauge: { black: 0, white: 0 },
   statuses: {},
   statusTimers: {},
@@ -48,6 +49,8 @@ function action(name) {
     state.cast.end = state.cast.start + castTime * 1000;
 
     // last non-ability action used, for combos
+    state.lastActionTime = state.currentTime;
+    state.lastCombo = action.combo();
     state.lastAction = action.id;
 
     // set the target time, the timer will only advance time to this point
@@ -66,6 +69,7 @@ function action(name) {
   updateActions(); // now
   addTimer(updateActions, action.recast * 1000); // when GCD finishes
   addTimer(updateActions, 800); // when animation lock finishes
+  addTimer(updateActions, 8000); // when combo breaks
 
   // when the cast finishes, resolve the action
   addTimer(() => {

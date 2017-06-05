@@ -5,8 +5,12 @@ const defaultAction = {
   white: 0,
   black: 0,
   potency: 0,
+  comboPotency: 0,
   description: "Does damage.",
   mana: 0,
+  combo() {
+    return false;
+  },
   execute() {
     // no-op
   },
@@ -20,7 +24,7 @@ const defaultAction = {
     return false;
   },
   getPotency() {
-    return this.potency;
+    return this.combo() ? this.comboPotency : this.potency;
   }
 };
 
@@ -140,7 +144,7 @@ const actions = {
         setStatus('verfire', true);
     },
     useable() {
-      return state.lastAction == "enchanted_redoublement";
+      return state.lastActionTime + 8000 > state.currentTime && state.lastCombo && state.lastAction == "enchanted_redoublement";
     },
     highlight() {
       return this.useable();
@@ -159,7 +163,7 @@ const actions = {
         setStatus('verstone', true);
     },
     useable() {
-      return state.lastAction == "enchanted_redoublement";
+      return state.lastActionTime + 8000 > state.currentTime && state.lastCombo && state.lastAction == "enchanted_redoublement";
     },
     highlight() {
       return this.useable();
@@ -281,10 +285,7 @@ const actions = {
     melee: true,
     description: "Deals an attack with a potency of 130.\nAction upgraded to Enchanted Riposte if both Black and White mana are 30 or above.",
     transform() {
-      if(state.gauge.black >= 30 && state.gauge.white >= 30) {
-        return 'enchanted_riposte';
-      }
-      return false;
+      return (state.gauge.black >= 30 && state.gauge.white >= 30) ? "enchanted_riposte" : false;
     }
   },
   enchanted_riposte: {
@@ -308,16 +309,13 @@ const actions = {
     melee: true,
     description: "Deals an attack with a potency of 100.\nCombo Action: Riposte or Enchanted Riposte\nCombo  Potency: 150\nAction upgraded to Enchanted Zwerchhau if both Black and White mana are 25 or above.",
     transform() {
-      if(state.gauge.black >= 25 && state.gauge.white >= 25) {
-        return 'enchanted_zwerchhau';
-      }
-      return false;
+      return (state.gauge.black >= 25 && state.gauge.white >= 25) ? "enchanted_zwerchhau" : false;
     },
-    getPotency() {
-      return this.highlight() ? this.comboPotency : this.potency;
+    combo() {
+      return this.highlight();
     },
     highlight() {
-      return state.lastAction == "riposte" || state.lastAction == "enchanted_riposte";
+      return state.lastActionTime + 8000 > state.currentTime && (state.lastAction == "riposte" || state.lastAction == "enchanted_riposte");
     }
   },
   enchanted_zwerchhau: {
@@ -331,11 +329,11 @@ const actions = {
     black: -25,
     melee: true,
     description: "Deals an attack with a potency of 100.\nCombo Action: Riposte or Enchanted Riposte\nCombo Potency: 290\nBalance Gauge Cost: 25 Black Mana\nBalace Gauge Cost: 25 White Mana",
-    getPotency() {
-      return this.highlight() ? this.comboPotency : this.potency;
+    combo() {
+      return this.highlight();
     },
     highlight() {
-      return state.lastAction == "riposte" || state.lastAction == "enchanted_riposte";
+      return state.lastActionTime + 8000 > state.currentTime && (state.lastAction == "riposte" || state.lastAction == "enchanted_riposte");
     }
   },
   redoublement: {
@@ -348,16 +346,13 @@ const actions = {
     melee: true,
     description: "Deals an attack with a potency of 100.\nCombo Action: Zwerchhau or Enchanted Zwerchhau\nCombo  Potency: 230\nAction upgraded to Enchanted Redoublement if both Black and White mana are 25 or above.",
     transform() {
-      if(state.gauge.black >= 25 && state.gauge.white >= 25) {
-        return 'enchanted_redoublement';
-      }
-      return false;
+      return (state.gauge.black >= 25 && state.gauge.white >= 25) ? "enchanted_redoublement" : false;
     },
-    getPotency() {
-      return this.highlight() ? this.comboPotency : this.potency;
+    combo() {
+      return this.highlight();
     },
     highlight() {
-      return state.lastAction == "zwerchhau" || state.lastAction == "enchanted_zwerchhau";
+      return state.lastActionTime + 8000 > state.currentTime && state.lastCombo && (state.lastAction == "zwerchhau" || state.lastAction == "enchanted_zwerchhau");
     }
   },
   enchanted_redoublement: {
@@ -371,11 +366,11 @@ const actions = {
     black: -25,
     melee: true,
     description: "Deals an attack with a potency of 100.Combo Action: Zwerchhau or Enchanted Zwerchhau\nCombo Potency: 470\nBalance Gauge Cost: 25 Black Mana\nBalace Gauge Cost: 25 White Mana",
-    getPotency() {
-      return this.highlight() ? this.comboPotency : this.potency;
+    combo() {
+      return this.highlight();
     },
     highlight() {
-      return state.lastAction == "zwerchhau" || state.lastAction == "enchanted_zwerchhau";
+      return state.lastActionTime + 8000 > state.currentTime && state.lastCombo && (state.lastAction == "zwerchhau" || state.lastAction == "enchanted_zwerchhau");
     }
   }
 };
