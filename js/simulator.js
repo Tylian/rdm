@@ -10,7 +10,7 @@ var state = {
   cooldowns: {},
   potency: 0,
   damage: 0,
-  damageStart: 0,
+  damageStart: -1,
   emboldenDamage: 0,
   animStart: 0,
   hotkeyMode: false,
@@ -88,7 +88,7 @@ function action(name) {
     var black = action.black > 0 && state.gauge.white >= state.gauge.black + 30 ? Math.floor(action.black / 2) : action.black;
 
     // start DPS timer if we did damage
-    if(state.damageStart == 0 && action.getPotency() > 0) {
+    if(state.damageStart == -1 && action.getPotency() > 0) {
       state.damageStart = state.currentTime;
     }
 
@@ -205,7 +205,7 @@ setInterval(() => {
     }
   });
 
-  $(".time").text(`${(state.currentTime / 1000).toFixed(1)}s`)
+  $(".time").text(`${((state.currentTime - state.damageStart) / 1000).toFixed(1)}s`)
 }, 100);
 
 // 3s server tick timer
