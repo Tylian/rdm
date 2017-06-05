@@ -114,6 +114,7 @@ function action(name) {
     }
 
     // update UI
+    $(".rdm").prop("src", `img/visualisation/Red_mage.png`);
     setMana(state.mana - action.mana);
     setGauge(state.gauge.black + black, state.gauge.white + white);
     updateActions();
@@ -149,6 +150,9 @@ function timer() {
     $(".casting .progress-bar").css({
       width: `${castPercent * 100}%`
     });
+
+    var frame = Math.floor((state.currentTime - state.cast.start) / 300) % 2;
+    $(".rdm").prop("src", `img/visualisation/Red_mage${frame + 1}.png`);
   }
 
   // handle timers
