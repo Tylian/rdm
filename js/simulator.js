@@ -204,6 +204,8 @@ setInterval(() => {
       label.text(``);
     }
   });
+
+  $(".time").text(`${(state.currentTime / 1000).toFixed(1)}s`)
 }, 100);
 
 // 3s server tick timer
