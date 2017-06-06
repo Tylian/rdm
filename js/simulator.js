@@ -281,10 +281,12 @@ $(document).keydown(function(e) {
   if(state.hotkeyMode && state.hotkeySkill != "") {
     state.hotkeys[which] = state.hotkeySkill;
     saveHotkeys();
+    e.preventDefault();
   } else {
     var name = state.hotkeys[which];
     if(name && actionUsable(name)) {
       action(name);
+      e.preventDefault();
     }
   }
 });
