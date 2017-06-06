@@ -93,8 +93,6 @@ function action(name) {
       state.damageStart = state.currentTime;
     }
 
-    console.log(action, action.getPotency(state.lastCombo), state.lastCombo)
-
     // update DPS
     var potency = action.getPotency(state.lastCombo);
     let damage = potency * 18.17 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
