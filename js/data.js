@@ -24,7 +24,7 @@ const defaultAction = {
     return false;
   },
   getPotency(combo) {
-    return combo ? this.comboPotency : this.potency;
+    return combo && this.comboPotency > 0 ? this.comboPotency : this.potency;
   }
 };
 
