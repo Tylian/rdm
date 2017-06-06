@@ -47,6 +47,27 @@ function hasStatus(name) {
   return state.statuses[name] > 0; // has to handle undefined
 }
 
+function floatStatus(name, added) {
+  return true; // todo lol
+  const status = statuses[name];
+
+  // Move all the existing ones up
+  $(".visualisation .status-text").each(function() {
+    console.log(this);
+    $(this).css("top", "-=28");
+  });
+
+  var statusNode = $(`<span class="status-text ${added ? "status-added" : "status-removed"}"><img src="img/status/${name}.png" /> ${added ? "+" : "-"} ${status.name}</span>`);
+  statusNode.css({
+    left: state.melee ? 240 : 570,
+    top: 100
+  });
+  statusNode.appendTo(".visualisation");
+  setTimeout(() => {
+    statusNode.remove();
+  }, 2500);
+}
+
 // sets a status as active/inactive
 function setStatus(name, active) {
   var status = statuses[name];
@@ -74,13 +95,21 @@ function setStatus(name, active) {
       }
     }, 1000, true);
 
+    // Floating status text
+    floatStatus(name, true);
+
     updateActions();
   } else {
+    if(state.statuses[name] > 0) {
+      floatStatus(name, false);
+    }
+
     // removing an action removes the timer and ui element
     removeTimer(state.statusTimers[name]);
     delete state.statuses[name];
     delete state.statusTimers[name];
     $(`.status[data-status="${name}"]`).remove();
+
     updateActions();
   }
 }

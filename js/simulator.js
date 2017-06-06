@@ -22,6 +22,7 @@ var state = {
   targetTime: 0,
   timers: [],
   realtimeMode: true,
+  statusStack: 0,
 };
 
 function preCache(src) {
@@ -92,10 +93,13 @@ function action(name) {
       state.damageStart = state.currentTime;
     }
 
-    // update DPS
-    state.potency += action.getPotency() * (1 + state.emboldenDamage);
+    console.log(action, action.getPotency(state.lastCombo), state.lastCombo)
 
-    let damage = action.getPotency() * 18.17 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
+    // update DPS
+    var potency = action.getPotency(state.lastCombo);
+    let damage = potency * 18.17 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
+
+    state.potency += potency * (1 + state.emboldenDamage);
     state.damage += damage;
 
     if(damage > 0) {

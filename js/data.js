@@ -23,8 +23,8 @@ const defaultAction = {
   transform() {
     return false;
   },
-  getPotency() {
-    return this.combo() ? this.comboPotency : this.potency;
+  getPotency(combo) {
+    return combo ? this.comboPotency : this.potency;
   }
 };
 
@@ -360,7 +360,7 @@ const actions = {
     type: "weaponskill",
     cast: 0,
     recast: 2.2,
-    potency: 470,
+    potency: 100,
     comboPotency: 470,
     white: -25,
     black: -25,

@@ -9,6 +9,17 @@
   50% { opacity: 1 }
 }
 
+@keyframes fade2 {
+  0% {
+    transform: translateY(30px);
+  }
+  100% {
+    transform: translateY(-50px);
+  }
+  0%,100% { opacity: 0 }
+  50% { opacity: 1 }
+}
+
 body {
   color: #fff;
   background-color: #292b2c;
@@ -214,6 +225,28 @@ body {
 .melee {
   transform: translateX(-350px);
 }
+
+.status-text {
+  position: absolute;
+  color: white;
+  vertical-align: middle;
+  text-align: left;
+  -webkit-animation: fade2 2.5s linear; /* Safari, Chrome and Opera > 12.1 */
+   -moz-animation: fade2 2.5s linear; /* Firefox < 16 */
+    -ms-animation: fade2 2.5s linear; /* Internet Explorer */
+     -o-animation: fade2 2.5s linear; /* Opera < 12.1 */
+        animation: fade2 2.5s linear;
+}
+
+.status-added {
+  color: #0c0;
+  text-shadow: 0 0 1px #3f3;
+}
+.status-removed {
+  color: #ccc;
+  text-shadow: 0 0 1px #666;
+}
+
 
 .damage-text {
   position: absolute;
