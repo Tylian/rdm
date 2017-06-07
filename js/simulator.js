@@ -273,8 +273,8 @@ requestAnimationFrame(timer); // start the animation-handling timer
 $(".actions .action").click(function(e) {
   var name = $(this).data("action");
   if(state.hotkeyMode) {
-    $(".hotkey").removeClass("hotkey");
-    $(this).addClass("hotkey");
+    $(".action.selected").removeClass("selected");
+    $(this).addClass("selected");
     state.hotkeySkill = name;
   } else {
     useAction(name);
@@ -298,7 +298,7 @@ $("#potreset").click(function(e) {
 $("#hotkey").click(function(e) {
   state.hotkeyMode = $(this).is(":checked");
   $(".container").toggleClass("hotkey-mode", state.hotkeyMode);
-  $(".hotkey").removeClass("hotkey");
+  $(".action.selected").removeClass("selected");
   state.hotkeySkill = "";
   updateActions();
 });

@@ -20,15 +20,21 @@
   50% { opacity: 1 }
 }
 
+@keyframes selected {
+  0%, 100 {
+    border: 2px solid #ff0000;
+  }
+  33% {
+    border: 2px solid #00ff00;
+  }
+  66% {
+    border: 2px solid #0000ff;
+  }
+}
+
 body {
   color: #fff;
   background-color: #292b2c;
-}
-
-.action {
-  display: inline-block;
-  position: relative;
-  border: 2px dashed transparent;
 }
 
 .active {
@@ -37,6 +43,40 @@ body {
 
 .actions {
   margin-top: 0.5em;
+}
+
+.actions .action .cooldown {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 2px black, 0 0 2px black;
+  font-weight: bold;
+  color: #fff;
+}
+
+.actions .action .keybind {
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    right: 2px;
+    font-size: 70%;
+    text-shadow: 0 0 1px black;
+    text-align: right;
+    color: #fff;
+}
+
+.actions .action.selected {
+  border: 2px solid #00ffff !important;
+  -webkit-animation: selected 5s linear infinite;
+  animation: selected 5s linear infinite;
+}
+
+.action {
+  display: inline-block;
+  position: relative;
+  border: 2px dashed transparent;
 }
 
 .statuses {
@@ -114,7 +154,8 @@ body {
   background-color: #742d98;
 }
 
-.progress-gauge .progress-bar, .progress-mana .progress-bar {
+.progress-gauge .progress-bar,
+.progress-mana .progress-bar {
   transition: width 0.3s ease-in ;
 }
 
@@ -159,32 +200,6 @@ body {
 
 .actions .action.disabled img {
   filter: grayscale(20%) contrast(60%) brightness(60%);
-}
-
-.actions .action .cooldown {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-shadow: 0 0 2px black, 0 0 2px black;
-  font-weight: bold;
-  color: #fff;
-}
-
-.actions .action .keybind {
-    display: block;
-    position: absolute;
-    bottom: -2px;
-    right: 2px;
-    font-size: 70%;
-    text-shadow: 0 0 1px black;
-    text-align: right;
-    color: #fff;
-}
-
-.hotkey {
-  border: 2px solid red !important;
 }
 
 .keybind-help {
