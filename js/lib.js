@@ -117,6 +117,8 @@ function setStatus(name, active) {
 // Checks if an action is usable
 function actionUsable(key) {
   const action = getAction(key);
+  if(!action)
+    return false;
 
   // trying to use a non-ability during the GCD?
   if(state.currentTime < state.recast.end && action.type != "ability")

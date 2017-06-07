@@ -118,11 +118,6 @@ body {
   transition: width 0.3s ease-in ;
 }
 
-/*.action-melee {
-  width: 200px;
-  line-height: 0.75;
-  height: 38px;
-}*/
 .mana-balance {
     background-color: #ffc0cb;
 }

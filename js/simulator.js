@@ -23,6 +23,8 @@ var state = {
   timers: [],
   realtimeMode: true,
   statusStack: 0,
+  queueAction: "",
+  queueTime: 0
 };
 
 function preCache(src) {
@@ -34,11 +36,16 @@ preCache("img/visualisation/Red_mage1.png");
 preCache("img/visualisation/Red_mage2.png");
 
 // Attempts to use an action by id
-function action(name) {
-  if(!actionUsable(name))
+function useAction(name) {
+  if(!actionUsable(name)) {
+    state.queueAction = name;
+    state.queueTime = state.currentTime;
     return;
+  }
 
   const action = getAction(name);
+  if(!action) return;
+
   const castTime = (hasStatus("dualcast") || hasStatus("swiftcast")) ? 0 : action.cast; // insta-cast?
 
   // are we casting a spell or using an ability
@@ -174,6 +181,13 @@ function timer() {
     }
   });
 
+  // Handle action queue
+  if(state.queueTime + 500 >= state.currentTime && actionUsable(state.queueAction)) {
+    useAction(state.queueAction);
+    state.queueAction = "";
+    state.queueTime = 0;
+  }
+
   return requestAnimationFrame(timer);
 }
 
@@ -262,8 +276,8 @@ $(".actions .action").click(function(e) {
     $(".hotkey").removeClass("hotkey");
     $(this).addClass("hotkey");
     state.hotkeySkill = name;
-  } else if(actionUsable(name)) {
-    action(name);
+  } else {
+    useAction(name);
   }
 });
 
@@ -306,14 +320,18 @@ $(document).keydown(function(e) {
     // todo
   }
 
-  var which = e.which.toString() + (e.altKey ? "a" : "") + (e.shiftKey ? "s" : "") + (e.ctrlKey ? "c" : "");
+  var which = e.which.toString();
+  if(e.originalEvent.getModifierState("Alt")) which += "a";
+  if(e.originalEvent.getModifierState("Shift")) which += "s";
+  if(e.originalEvent.getModifierState("Control")) which += "c";
+
   if(state.hotkeyMode && state.hotkeySkill != "") {
     setHotkey(state.hotkeySkill, which);
     e.preventDefault();
   } else {
     var name = state.hotkeys[which];
-    if(name && actionUsable(name)) {
-      action(name);
+    if(name) {
+      useAction(name);
       e.preventDefault();
     }
   }
