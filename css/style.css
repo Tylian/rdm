@@ -25,6 +25,12 @@ body {
   background-color: #292b2c;
 }
 
+.action {
+  display: inline-block;
+  position: relative;
+  border: 2px dashed transparent;
+}
+
 .active {
   visibility: visible !important;
 }
@@ -83,14 +89,6 @@ body {
 .action-row {
   margin-bottom: 0.5em;
 }
-
-/*.cooldown-row button {
-    height: 58px;
-}
-
-.cooldown-row small {
-  display: block;
-}*/
 
 .progress-gauge {
   flex-flow: column;
@@ -160,29 +158,33 @@ body {
   text-decoration: underline;
 }
 
-.actions button {
-  padding: 0;
-  background: transparent;
-  border: 2px dashed transparent;
-  position: relative;
-}
-
-.actions button.highlight {
+.actions .action.highlight {
   border-color: #d0a21a;
 }
 
-.actions button:disabled img {
+.actions .action.disabled img {
   filter: grayscale(20%) contrast(60%) brightness(60%);
 }
 
-.actions button > small {
+.actions .action .cooldown {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 2px black, 0 0 2px black;
+  font-weight: bold;
+  color: #fff;
+}
+
+.actions .action .keybind {
     display: block;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-shadow: 0 0 2px black, 0 0 2px black;
-    font-weight: bold;
+    bottom: -2px;
+    right: 2px;
+    font-size: 70%;
+    text-shadow: 0 0 1px black;
+    text-align: right;
     color: #fff;
 }
 
@@ -259,4 +261,24 @@ body {
     -ms-animation: fade 1.3s; /* Internet Explorer */
      -o-animation: fade 1.3s; /* Opera < 12.1 */
         animation: fade 1.3s;
+}
+
+.tooltip-inner {
+  max-width: 350px;
+}
+
+.tooltip-inner {
+  text-align: left;
+}
+
+.green {
+  color: #0c0;
+}
+
+.yellow {
+  color: #ff0;
+}
+
+.orange {
+  color: #f80;
 }

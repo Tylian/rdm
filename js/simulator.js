@@ -57,11 +57,6 @@ function action(name) {
     state.cast.start = state.currentTime;
     state.cast.end = state.cast.start + castTime * 1000;
 
-    // last non-ability action used, for combos
-    state.lastActionTime = state.currentTime;
-    state.lastCombo = action.combo();
-    state.lastAction = action.id;
-
     // set the target time, the timer will only advance time to this point
     // it's set to what ever the longest lock is, cast, recast or anim lock (or the old target time)
     var delay = Math.max(castTime, action.recast, 0.8) * 1000;
@@ -82,19 +77,19 @@ function action(name) {
 
   // when the cast finishes, resolve the action
   addTimer(() => {
-    action.execute(); // execute action-specific stuff
+    action.execute(state); // execute action-specific stuff
 
     // get how much black and white mana to add to gauge
     var white = action.white > 0 && state.gauge.black >= state.gauge.white + 30 ? Math.floor(action.white / 2) : action.white;
     var black = action.black > 0 && state.gauge.white >= state.gauge.black + 30 ? Math.floor(action.black / 2) : action.black;
 
     // start DPS timer if we did damage
-    if(state.damageStart == -1 && action.getPotency() > 0) {
+    var potency = action.calculatePotency(state);
+    if(state.damageStart == -1 && potency > 0) {
       state.damageStart = state.currentTime;
     }
 
     // update DPS
-    var potency = action.getPotency(state.lastCombo);
     let damage = potency * 18.17 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
 
     state.potency += potency * (1 + state.emboldenDamage);
@@ -114,6 +109,13 @@ function action(name) {
     // give dualcast if we casted a thing
     if(action.type == "spell" && castTime > 0) {
       setStatus('dualcast', true);
+    }
+
+    // last non-ability action used, for combos
+    if(action.type != "ability") {
+      state.lastActionTime = state.currentTime;
+      state.lastCombo = action.combo(state);
+      state.lastAction = action.id;
     }
 
     // update UI
@@ -188,10 +190,10 @@ setInterval(() => {
   var now = state.currentTime;
   var gcd = state.recast.end - state.currentTime;
 
-  $(".actions button").each(function() {
+  $(".actions .action").each(function() {
     const key = $(this).data("action");
     const action = getAction(key);
-    var label = $("small", this)
+    var label = $(".cooldown", this)
 
     var value = parseInt(state.cooldowns[action.id], 10) || 0;
     if(value < gcd && action.type != "ability") {
@@ -229,20 +231,47 @@ loadHotkeys(); // load hotkeys
 setGauge(0, 0); // reset state
 setMana(14400)
 updateActions();
+$("body").tooltip({
+  selector: "[data-action]",
+  html: true,
+  title() {
+    const action = getAction($(this).data("action"));
+    var tooltip = "";
+    if(action.type == "ability") {
+      tooltip = `
+        <strong><u>${action.name}</u></strong> (${action.type})
+        <strong>Cast:</strong> ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}
+
+        ${action.description}`;
+    } else {
+      tooltip =`
+        <strong><u>${action.name}</u></strong> (${action.type})
+        <strong>Cast:</strong> ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}  <strong>Recast:</strong> ${action.recast.toFixed(2)}s
+
+        ${action.description}`;
+    }
+    return tooltip.trim().replace(/\n/g, "<br />").replace(/^\s+/mg, "");
+  }
+});
 requestAnimationFrame(timer); // start the animation-handling timer
 
 // Clicking on action buttons uses them (or sets them as the active skill in hotkey mode)
-$(".actions button").click(function(e) {
+$(".actions .action").click(function(e) {
   var name = $(this).data("action");
   if(state.hotkeyMode) {
     $(".hotkey").removeClass("hotkey");
     $(this).addClass("hotkey");
     state.hotkeySkill = name;
-    return true;
-  }
-
-  if(actionUsable(name)) {
+  } else if(actionUsable(name)) {
     action(name);
+  }
+});
+
+$(".actions .action").contextmenu(function(e) {
+  if(state.hotkeyMode) {
+    var name = $(this).data("action");
+    clearHotkey(name);
+    e.preventDefault();
   }
 });
 
@@ -279,8 +308,7 @@ $(document).keydown(function(e) {
 
   var which = e.which.toString() + (e.altKey ? "a" : "") + (e.shiftKey ? "s" : "") + (e.ctrlKey ? "c" : "");
   if(state.hotkeyMode && state.hotkeySkill != "") {
-    state.hotkeys[which] = state.hotkeySkill;
-    saveHotkeys();
+    setHotkey(state.hotkeySkill, which);
     e.preventDefault();
   } else {
     var name = state.hotkeys[which];

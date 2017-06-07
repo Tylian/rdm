@@ -34,7 +34,7 @@ function getAction(name) {
     return false;
 
   var action = Object.assign({ id: name }, defaultAction, actions[name]);
-  var transform = action.transform();
+  var transform = action.transform(state);
   if(transform != false) {
     return getAction(transform);
   }
@@ -142,7 +142,7 @@ function actionUsable(key) {
     return false;
 
   // check action specific stuff
-  return action.useable();
+  return action.useable(state);
 }
 
 // Sets black/white mana gauge and updates UI
@@ -167,41 +167,21 @@ function setGauge(black, white) {
 
 // updates all action buttons state to be correct
 function updateActions() {
-  $(".actions button").each(function() {
+  $(".actions .action").each(function() {
     const key = $(this).data("action");
     const action = getAction(key);
 
-    updateTooltip(this, key);
     $("img", this).prop("src", `img/${action.id}.png`);
 
     if(!state.hotkeyMode) {
-      $(this).prop("disabled", !actionUsable(key));
-      $(this).toggleClass("highlight", action.highlight());
+      $(this).toggleClass("disabled", !actionUsable(key));
+      $(this).toggleClass("highlight", action.highlight(state));
     } else {
       $(this).toggle(true);
-      $(this).prop("disabled", false);
+      $(this).toggleClass("disabled", false);
       $(this).removeClass("highlight");
     }
   });
-}
-
-// Set an element's tooltip as the correct info for an action
-function updateTooltip(el, key) {
-  const action = getAction(key);
-
-  if(action.type == "ability") {
-    $(el).attr("title",
-    `${action.name} (${action.type})
-Recast: ${action.recast.toFixed(2)}s
-
-${action.description}`);
-  } else {
-    $(el).attr("title",
-    `${action.name} (${action.type})
-Cast: ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}  Recast: ${action.recast.toFixed(2)}s
-
-${action.description}`);
-  }
 }
 
 // saves hotkeys to localStorage
@@ -212,8 +192,43 @@ function saveHotkeys() {
 // locads hotkeys from localStorage
 function loadHotkeys() {
   try {
-    state.hotkeys = JSON.parse(localStorage["rdmhotkeys"]);
+    var keybinds = JSON.parse(localStorage["rdmhotkeys"]);
+    for(let [keybind, action] of Object.entries(keybinds)) {
+      setHotkey(action, keybind, true);
+    }
   } catch(e) {
     state.hotkeys = {};
   }
+}
+
+function hotkeyText(hotkey) {
+  var mods = {
+    shift: hotkey.indexOf("s") > -1,
+    ctrl: hotkey.indexOf("c") > -1,
+    alt: hotkey.indexOf("a") > -1
+  };
+  var key = parseInt(hotkey.replace(/[sca]/g, ""), 10);
+  var mods = (mods.shift ? "⬆" : "") + (mods.ctrl ? "c" : "") + (mods.alt ? "a" : "");
+  return `<sup>${mods}</sup>${keyCodes[key]}`;
+}
+
+function clearHotkey(action, dontSave) {
+  var changed = false;
+  for(let [key, skill] of Object.entries(state.hotkeys)) {
+    if(action == skill) {
+      delete state.hotkeys[key];
+      $(`.action[data-action="${action}"] .keybind`).html("");
+      changed = true;
+    }
+  }
+
+  if(!dontSave && changed) saveHotkeys();
+}
+
+function setHotkey(action, keybind, dontSave) {
+  clearHotkey(state.hotkeys[keybind]);
+  state.hotkeys[keybind] = action;
+  $(`.action[data-action="${action}"] .keybind`).html(hotkeyText(keybind));
+
+  if(!dontSave) saveHotkeys();
 }
