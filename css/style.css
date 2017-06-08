@@ -145,6 +145,10 @@ body {
   text-align: left !important;
 }
 
+.info label {
+  margin-right: 1em;
+}
+
 .bg-white {
   background-color: #dcdcac;
   color: #333;
