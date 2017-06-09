@@ -234,3 +234,62 @@ function setHotkey(action, keybind, dontSave) {
 
   if(!dontSave) saveHotkeys();
 }
+
+var settingHooks = {};
+function getSetting(name, initial) {
+  if(typeof state.setting[name] == "undefined") {
+    if(typeof localStorage["rdm" + name] == "undefined") {
+      state.setting[name] = initial;
+      return initial;
+    }
+
+    switch(typeof initial) {
+      case "boolean": state.setting[name] = (localStorage["rdm" + name] == "on"); break;
+      case "string": state.setting[name] = localStorage["rdm" + name]; break;
+      case "number": state.setting[name] = parseInt(localStorage["rdm" + name], 10); break;
+    }
+  }
+
+  return state.setting[name];
+}
+
+function setSetting(name, value) {
+  state.setting[name] = value;
+  switch(typeof value) {
+    case "boolean":
+      localStorage["rdm" + name] = value ? "on" : "off";
+      $(`[data-setting="${name}"]`).prop("checked", value);
+      break;
+    case "string":
+      localStorage["rdm" + name] = value;
+      $(`[data-setting="${name}"]`).val(value);
+      break;
+    case "number":
+      localStorage["rdm" + name] = value.toString();
+      $(`[data-setting="${name}"]`).val(value);
+      break;
+  }
+
+  if(typeof settingHooks[name] == "function") {
+    settingHooks[name](value);
+  }
+}
+
+function loadSetting(name, initial, hook) {
+  var value = getSetting(name, initial);
+  switch(typeof value) {
+    case "boolean":
+      $(`[data-setting="${name}"]`).prop("checked", value);
+      break;
+    case "string":
+      $(`[data-setting="${name}"]`).val(value);
+      break;
+    case "number":
+      $(`[data-setting="${name}"]`).val(value);
+      break;
+  }
+  settingHooks[name] = hook;
+  if(typeof hook == "function") {
+    hook(value);
+  }
+}

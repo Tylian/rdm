@@ -325,8 +325,11 @@ const actions = {
     melee: true,
     description: `Delivers an attack with a potency of 130.
     Action upgraded to <span class="orange">Enchanted Riposte</span> if both <span class="orange">Black Mana</span> and <span class="orange">White Mana</span> are 30 or above.`,
+    execute(state) {
+      setMelee(true);
+    },
     useable(state) {
-      return state.melee;
+      return state.melee || getSetting("rangedmelee");
     },
     transform(state) {
       return (state.gauge.black >= 30 && state.gauge.white >= 30) ? "enchanted_riposte" : false;
@@ -344,9 +347,12 @@ const actions = {
     description: `Deals unaspected dmage with a potency of 210.
     <span class="green">Balance Gauge Cost:</span> 30 <span class="orange">Black Mana</span>
     <span class="green">Balance Gauge Cost:</span> 30 <span class="orange">White Mana</span>`,
+    execute(state) {
+      setMelee(true);
+    },
     useable(state) {
-      return state.melee;
-    }
+      return state.melee || getSetting("rangedmelee");
+    },
   },
   zwerchhau: {
     name: "Zwerchhau",
@@ -361,8 +367,11 @@ const actions = {
     <span class="green">Combo Action:</span> <span class="orange">Riposte</span> or <span class="orange">Enchanted Riposte</span>
     <span class="green">Combo Potency:</span> 150
     Action upgraded to <span class="orange">Enchanted Zwerchhau</span> if both <span class="orange">Black Mana</span> and <span class="orange">White Mana</span> are 25 or above.`,
+    execute(state) {
+      setMelee(true);
+    },
     useable(state) {
-      return state.melee;
+      return state.melee || getSetting("rangedmelee");
     },
     transform(state) {
       return (state.gauge.black >= 25 && state.gauge.white >= 25) ? "enchanted_zwerchhau" : false;
@@ -387,8 +396,11 @@ const actions = {
     <span class="green">Combo Potency:</span> 290
     <span class="green">Balance Gauge Cost:</span> 25 <span class="orange">Black Mana</span>
     <span class="green">Balance Gauge Cost:</span> 25 <span class="orange">White Mana</span>`,
+    execute(state) {
+      setMelee(true);
+    },
     useable(state) {
-      return state.melee;
+      return state.melee || getSetting("rangedmelee");
     },
     highlight(state) {
       return this.combo(state);
@@ -407,8 +419,11 @@ const actions = {
     <span class="green">Combo Action:</span> <span class="orange">Zwerchhau</span> or <span class="orange">Enchanted Zwerchhau</span>
     <span class="green">Combo Potency:</span> 230
     Action upgraded to <span class="orange">Enchanted Redoublement</span> if both <span class="orange">Black Mana</span> and <span class="orange">White Mana</span> are 25 or above.`,
+    execute(state) {
+      setMelee(true);
+    },
     useable(state) {
-      return state.melee;
+      return state.melee || getSetting("rangedmelee");
     },
     transform(state) {
       return (state.gauge.black >= 25 && state.gauge.white >= 25) ? "enchanted_redoublement" : false;
@@ -433,8 +448,11 @@ const actions = {
     <span class="green">Combo Potency:</span> 470
     <span class="green">Balance Gauge Cost:</span> 25 <span class="orange">Black Mana</span>
     <span class="green">Balance Gauge Cost:</span> 25 <span class="orange">White Mana</span>`,
+    execute(state) {
+      setMelee(true);
+    },
     useable(state) {
-      return state.melee;
+      return state.melee || getSetting("rangedmelee");
     },
     highlight(state) {
       return this.combo(state);

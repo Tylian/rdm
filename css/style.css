@@ -300,8 +300,13 @@ body {
 .visualisation-wrapper {
   position: relative;
   min-height: 60px;
+  margin-top: 12px;
 }
 
 .visualisation-wrapper.hidden .visualisation {
   display: none;
+}
+
+.modal {
+  color: #292b2c;
 }

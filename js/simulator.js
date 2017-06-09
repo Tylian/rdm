@@ -21,8 +21,7 @@ var state = {
   currentTime: 0,
   targetTime: 0,
   timers: [],
-  realtimeMode: true,
-  visualise: true,
+  setting: [],
   statusStack: 0,
   queueAction: "",
   queueTime: 0
@@ -143,7 +142,7 @@ function timer() {
   lastFrame = Date.now();
 
   // cap time to the target if not realtime
-  if(!state.realtimeMode) {
+  if(!getSetting("realtime", true)) {
     state.currentTime = Math.min(state.targetTime, state.currentTime);
   }
 
@@ -238,13 +237,13 @@ addTimer(() => {
   updateActions();
 }, 3000, true);
 
-
-state.realtimeMode = localStorage["rdmrealtime"] != "off";
-$("#realtime").prop("checked", state.realtimeMode);
-
-state.visualise = localStorage["rdmvisualise"] != "off";
-$(".visualisation-wrapper").toggleClass("hidden", !state.visualise);
-$("#visualise").prop("checked", state.visualise);
+loadSetting("realtime", true);
+loadSetting("visualise", true, function(value) {
+  $(".visualisation-wrapper").toggleClass("hidden", !value);
+});
+loadSetting("rangedmelee", false, function() {
+  updateActions();
+});
 
 loadHotkeys(); // load hotkeys
 setGauge(0, 0); // reset state
@@ -308,19 +307,10 @@ $("#hotkey").click(function(e) {
   updateActions();
 });
 
-// Realtime toggle
-$("#realtime").click(function(e) {
-  state.realtimeMode = $(this).is(":checked");
-  localStorage["rdmrealtime"] = state.realtimeMode ? "on" : "off";
+// Settings
+$("[data-setting]").click(function(e) {
+  setSetting($(this).data("setting"), $(this).is(":checked"));
 });
-
-// Realtime toggle
-$("#visualise").click(function(e) {
-  state.visualise = $(this).is(":checked");
-  $(".visualisation-wrapper").toggleClass("hidden", !state.visualise);
-  localStorage["rdmvisualise"] = state.visualise ? "on" : "off";
-});
-
 
 // Hotkey handler
 $(document).keydown(function(e) {
