@@ -97,7 +97,9 @@ function useAction(name) {
     }
 
     // update DPS
-    let damage = potency * 18.17 * (Math.random() * 0.05 + 0.975) * (1 + state.emboldenDamage);
+    let damage = Math.floor(potency / 100 * 1817);
+    damage = Math.floor(damage * (1 + state.emboldenDamage));
+    damage = Math.floor(damage * (Math.random() * 0.1 + 0.95));
 
     state.potency += potency * (1 + state.emboldenDamage);
     state.damage += damage;
