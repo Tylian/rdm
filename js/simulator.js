@@ -243,9 +243,7 @@ state.realtimeMode = localStorage["rdmrealtime"] != "off";
 $("#realtime").prop("checked", state.realtimeMode);
 
 state.visualise = localStorage["rdmvisualise"] != "off";
-if(state.visualise) {
-  $(".visualisation").parent().show();
-}
+$(".visualisation-wrapper").toggleClass("hidden", !state.visualise);
 $("#visualise").prop("checked", state.visualise);
 
 loadHotkeys(); // load hotkeys
@@ -319,11 +317,7 @@ $("#realtime").click(function(e) {
 // Realtime toggle
 $("#visualise").click(function(e) {
   state.visualise = $(this).is(":checked");
-  if(state.visualise) {
-    $(".visualisation").parent().show();
-  } else {
-    $(".visualisation").parent().hide();
-  }
+  $(".visualisation-wrapper").toggleClass("hidden", !state.visualise);
   localStorage["rdmvisualise"] = state.visualise ? "on" : "off";
 });
 

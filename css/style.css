@@ -296,3 +296,12 @@ body {
 .orange {
   color: #f80;
 }
+
+.visualisation-wrapper {
+  position: relative;
+  min-height: 60px;
+}
+
+.visualisation-wrapper.hidden .visualisation {
+  display: none;
+}
