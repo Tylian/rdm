@@ -22,6 +22,7 @@ var state = {
   targetTime: 0,
   timers: [],
   realtimeMode: true,
+  visualise: true,
   statusStack: 0,
   queueAction: "",
   queueTime: 0
@@ -241,6 +242,12 @@ addTimer(() => {
 state.realtimeMode = localStorage["rdmrealtime"] != "off";
 $("#realtime").prop("checked", state.realtimeMode);
 
+state.visualise = localStorage["rdmvisualise"] != "off";
+if(state.visualise) {
+  $(".visualisation").parent().show();
+}
+$("#visualise").prop("checked", state.visualise);
+
 loadHotkeys(); // load hotkeys
 setGauge(0, 0); // reset state
 setMana(14400)
@@ -308,6 +315,18 @@ $("#realtime").click(function(e) {
   state.realtimeMode = $(this).is(":checked");
   localStorage["rdmrealtime"] = state.realtimeMode ? "on" : "off";
 });
+
+// Realtime toggle
+$("#visualise").click(function(e) {
+  state.visualise = $(this).is(":checked");
+  if(state.visualise) {
+    $(".visualisation").parent().show();
+  } else {
+    $(".visualisation").parent().hide();
+  }
+  localStorage["rdmvisualise"] = state.visualise ? "on" : "off";
+});
+
 
 // Hotkey handler
 $(document).keydown(function(e) {
