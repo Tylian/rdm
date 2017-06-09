@@ -260,7 +260,7 @@ $("body").tooltip({
     } else {
       tooltip =`
         <strong><u>${action.name}</u></strong> (${action.type})
-        <strong>Cast:</strong> ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}  <strong>Recast:</strong> ${action.recast.toFixed(2)}s
+        <strong>Cast:</strong> ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}  <strong>Recast:</strong> ${action.recast.toFixed(2)}s ${action.type === "weaponskill" ? "" : "<br><strong>Mana Cost:</strong> " + action.mana}
 
         ${action.description}`;
     }
