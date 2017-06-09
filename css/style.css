@@ -310,3 +310,19 @@ body {
 .modal {
   color: #292b2c;
 }
+
+.keybind-help {
+  display: none;
+  width: 500px;
+  margin: 15px auto 0;
+  background: #902b2b;
+  border: 1px solid #da7777;
+  border-radius: 20px;
+  padding: 5px 20px;
+}
+
+.keybind-help h4 {
+  font-size: 120%;
+  line-height: 1.1;
+  margin: 0 0 2px;
+}
