@@ -73,12 +73,12 @@ function useAction(name) {
   // put the action on cooldown
   addRecast(action.recastGroup(), action.recast * 1000);
 
-  state.animationLock = state.currentTime + action.animationLock;
+  state.animationLock = state.currentTime + action.animationLock * 1000;
 
   // Update UI
   updateActions(); // now
   addTimer(updateActions, action.recast * 1000); // when GCD finishes
-  addTimer(updateActions, 800); // when animation lock finishes
+  addTimer(updateActions, action.animationLock * 1000); // when animation lock finishes
   addTimer(updateActions, 8000); // when combo breaks
 
   // when the cast finishes, resolve the action
