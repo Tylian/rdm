@@ -258,25 +258,19 @@ function setSetting(name, value) {
   switch(typeof value) {
     case "boolean":
       localStorage["rdm" + name] = value ? "on" : "off";
-      $(`[data-setting="${name}"]`).prop("checked", value);
       break;
     case "string":
       localStorage["rdm" + name] = value;
-      $(`[data-setting="${name}"]`).val(value);
       break;
     case "number":
       localStorage["rdm" + name] = value.toString();
-      $(`[data-setting="${name}"]`).val(value);
       break;
   }
 
-  if(typeof settingHooks[name] == "function") {
-    settingHooks[name](value);
-  }
+  syncSetting(name, value);
 }
 
-function loadSetting(name, initial, hook) {
-  var value = getSetting(name, initial);
+function syncSetting(name, value) {
   switch(typeof value) {
     case "boolean":
       $(`[data-setting="${name}"]`).prop("checked", value);
@@ -288,8 +282,12 @@ function loadSetting(name, initial, hook) {
       $(`[data-setting="${name}"]`).val(value);
       break;
   }
-  settingHooks[name] = hook;
-  if(typeof hook == "function") {
-    hook(value);
+  if(typeof settingHooks[name] == "function") {
+    settingHooks[name](value);
   }
+}
+
+function loadSetting(name, initial, hook) {
+  settingHooks[name] = hook;
+  syncSetting(name, getSetting(name, initial));
 }

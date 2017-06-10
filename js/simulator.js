@@ -51,7 +51,7 @@ function useAction(name) {
   // are we casting a spell or using an ability
   if(action.type != "ability") {
     // remove dualcast/swiftcast status, priority being swiftcast
-    if(hasStatus("swiftcast")) {
+    if(hasStatus("swiftcast") && action.type == "spell") {
       setStatus("swiftcast", false);
     } else {
       setStatus("dualcast", false);
