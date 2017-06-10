@@ -54,6 +54,9 @@ body {
   text-shadow: 0 0 2px black, 0 0 2px black;
   font-weight: bold;
   color: #fff;
+  -webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 }
 
 .actions .action .keybind {

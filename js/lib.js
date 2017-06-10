@@ -63,7 +63,8 @@ function setRecast(name, duration) {
 }
 
 function getRecast(name) {
-  if(state.recast[name] == undefined) return false;
+  if(state.recast[name] == undefined)
+    return 0;
 
   var recast = state.recast[name];
   return (recast.start + recast.duration) - state.currentTime;
