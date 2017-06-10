@@ -67,7 +67,7 @@ function getRecast(name) {
     return 0;
 
   var recast = state.recast[name];
-  return (recast.start + recast.duration) - state.currentTime;
+  return Math.max(0, (recast.start + recast.duration) - state.currentTime);
 }
 
 function clearRecast(name) {
