@@ -8,6 +8,10 @@ const defaultAction = {
   comboPotency: 0,
   description: `Does damage.`,
   mana: 0,
+  animationLock: 0.8,
+  get recastGroup() {
+    return this.type == "ability" ? this.id : "global";
+  },
   comboActions: [],
   combo(state) {
     if(state.lastActionTime + 8000 > state.currentTime && this.comboActions.includes(state.lastAction)) {
@@ -247,8 +251,8 @@ const actions = {
     execute(state) {
       state.gauge.black = Math.min(100, state.gauge.black * 2);
       state.gauge.white = Math.min(100, state.gauge.white * 2);
-      state.cooldowns["corps_a_corps"] = 0;
-      state.cooldowns["displacement"] = 0;
+      clearRecast("corps_a_corps");
+      clearRecast("displacement");
       state.lastAction = "";
     }
   },
@@ -267,7 +271,6 @@ const actions = {
         } else {
           state.emboldenDamage = 0;
         }
-        var roman = ["I", "II", "III", "IV", "V"];
         $("[data-status=\"embolden\"] img").prop("src", `img/status/embolden${Math.floor(state.emboldenDamage / 0.04) + 1}.png`)
       }
 

@@ -47,6 +47,32 @@ function hasStatus(name) {
   return state.statuses[name] > 0; // has to handle undefined
 }
 
+function addRecast(name, duration) {
+  state.recast[name] = {
+    start: state.currentTime,
+    duration: duration
+  };
+}
+
+function setRecast(name, duration) {
+  if(!getRecast(name)) {
+      addRecast(name, duration);
+  }
+
+  state.recast[name].duration = duration;
+}
+
+function getRecast(name) {
+  if(state.recast[name] == undefined) return false;
+
+  var recast = state.recast[name];
+  return (recast.start + recast.duration) - state.currentTime;
+}
+
+function clearRecast(name) {
+  delete state.recast[name];
+}
+
 function floatStatus(name, added) {
   return true; // todo lol
   const status = statuses[name];
@@ -120,16 +146,9 @@ function actionUsable(key) {
   if(!action)
     return false;
 
-  // trying to use a non-ability during the GCD?
-  if(state.currentTime < state.recast.end && action.type != "ability")
+  // trying to use an action while it's on cooldown
+  if(!!getRecast(action.recastGroup))
     return false;
-
-  // trying to use an ability while it's on cooldown
-  if(action.type == "ability") {
-    var time = state.cooldowns[action.id];
-    if(!isNaN(parseInt(time, 10)) && state.currentTime < time)
-      return false;
-  }
 
   // can't use stuff while casting
   if(state.currentTime < state.cast.end)

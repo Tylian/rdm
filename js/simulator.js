@@ -1,13 +1,12 @@
 var state = {
-  recast: { start: 0, end: 0 },
   cast: { action: "", start: 0, end: 0 },
+  recast: {},
   lastAction: "",
   lastCombo: false,
   gauge: { black: 0, white: 0 },
   statuses: {},
   statusTimers: {},
   melee: false,
-  cooldowns: {},
   potency: 0,
   damage: 0,
   damageStart: -1,
@@ -58,23 +57,23 @@ function useAction(name) {
     }
 
     // Set the cast/resast state for both error checking and UI
-    state.recast.start = state.currentTime;
-    state.recast.end = state.recast.start + action.recast * 1000;
     state.cast.action = action.id;
     state.cast.start = state.currentTime;
     state.cast.end = state.cast.start + castTime * 1000;
 
     // set the target time, the timer will only advance time to this point
     // it's set to what ever the longest lock is, cast, recast or anim lock (or the old target time)
-    var delay = Math.max(castTime, action.recast, 0.8) * 1000;
+    var delay = Math.max(castTime, action.recast, action.animationLock) * 1000;
     state.targetTime = state.currentTime + Math.max(delay + 10, state.targetTime - state.currentTime);
   } else {
-    // using an ability is a lot simpler, put it on cooldown and advance target time by animation lock
-    state.targetTime = state.currentTime + Math.max(810, state.targetTime - state.currentTime);
-    state.cooldowns[name] = state.currentTime + action.recast * 1000;
+    // using an ability is a lot simpler, advance target time by animation lock
+    state.targetTime = state.currentTime + Math.max(action.animationLock * 1000 + 10, state.targetTime - state.currentTime);
   }
 
-  state.animationLock = state.currentTime + 800;
+  // put the action on cooldown
+  addRecast(action.recastGroup, action.recast);
+
+  state.animationLock = state.currentTime + action.animationLock;
 
   // Update UI
   updateActions(); // now
@@ -150,7 +149,7 @@ function timer() {
 
   // are we casting/on gcd consts
   const casting = state.currentTime < state.cast.end;
-  const globalCooldown = state.currentTime < state.recast.end;
+  const globalCooldown = !!getRecast("global");
 
   // show/hide cast bar
   $('.casting').toggle(casting);
@@ -211,10 +210,8 @@ setInterval(() => {
     const action = getAction(key);
     var label = $(".cooldown", this)
 
-    var value = parseInt(state.cooldowns[action.id], 10) || 0;
-    if(value < gcd && action.type != "ability") {
-      label.text(`${(gcd / 1000).toFixed(1)}s`)
-    } else if(value > now) {
+    var value = getRecast(action.recastGrouo);
+    if(value > now) {
       if((value - now) > 10) {
         label.text(`${Math.floor((value - now) / 1000)}s`);
       } else {
