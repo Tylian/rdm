@@ -56,7 +56,7 @@ function addRecast(name, duration) {
 
 function setRecast(name, duration) {
   if(!getRecast(name)) {
-      addRecast(name, duration);
+    return addRecast(name, duration);
   }
 
   state.recast[name].duration = duration;
@@ -148,7 +148,7 @@ function actionUsable(key) {
     return false;
 
   // trying to use an action while it's on cooldown
-  if(!!getRecast(action.recastGroup))
+  if(!!getRecast(action.recastGroup()))
     return false;
 
   // can't use stuff while casting

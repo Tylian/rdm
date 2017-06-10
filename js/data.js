@@ -9,7 +9,7 @@ const defaultAction = {
   description: `Does damage.`,
   mana: 0,
   animationLock: 0.8,
-  get recastGroup() {
+  recastGroup() {
     return this.type == "ability" ? this.id : "global";
   },
   comboActions: [],

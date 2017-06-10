@@ -71,7 +71,7 @@ function useAction(name) {
   }
 
   // put the action on cooldown
-  addRecast(action.recastGroup, action.recast);
+  addRecast(action.recastGroup(), action.recast * 1000);
 
   state.animationLock = state.currentTime + action.animationLock;
 
@@ -210,12 +210,12 @@ setInterval(() => {
     const action = getAction(key);
     var label = $(".cooldown", this)
 
-    var value = getRecast(action.recastGrouo);
-    if(value > now) {
-      if((value - now) > 10) {
-        label.text(`${Math.floor((value - now) / 1000)}s`);
+    var value = getRecast(action.recastGroup()) / 1000;
+    if(!!value) {
+      if(value > 10) {
+        label.text(`${Math.floor(value)}s`);
       } else {
-        label.text(`${(Math.max(0, value - now) / 1000).toFixed(1)}s`);
+        label.text(`${value.toFixed(1)}s`);
       }
     } else {
       label.text(``);
