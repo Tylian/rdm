@@ -243,8 +243,9 @@ loadSetting("visualise", true, "boolean", function(value) {
 loadSetting("rangedmelee", false, "boolean", function() {
   updateActions();
 });
-loadSetting("gcd", 2.5, "number", function() {
+loadSetting("gcd", 2.5, "number", function(value) {
   updateActions();
+  $(".gcdtime").text(value.toFixed(2));
 });
 loadSetting("tooltips", true, "boolean", function(value) {
   if(!value) {
