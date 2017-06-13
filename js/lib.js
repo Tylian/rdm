@@ -39,6 +39,12 @@ function getAction(name) {
     return getAction(transform);
   }
 
+  if(action.type == "spell") {
+    var scale = getSetting("gcd", 2.5) / 2.5;
+    action.cast *= scale;
+    action.recast *= scale;
+  }
+
   return action;
 }
 
@@ -256,6 +262,7 @@ function setHotkey(action, keybind, dontSave) {
 }
 
 var settingHooks = {};
+var settingTypes = {};
 function getSetting(name, initial) {
   if(typeof state.setting[name] == "undefined") {
     if(typeof localStorage["rdm" + name] == "undefined") {
@@ -263,10 +270,10 @@ function getSetting(name, initial) {
       return initial;
     }
 
-    switch(typeof initial) {
+    switch(getSettingType(name)) {
       case "boolean": state.setting[name] = (localStorage["rdm" + name] == "on"); break;
       case "string": state.setting[name] = localStorage["rdm" + name]; break;
-      case "number": state.setting[name] = parseInt(localStorage["rdm" + name], 10); break;
+      case "number": state.setting[name] = parseFloat(localStorage["rdm" + name]); break;
     }
   }
 
@@ -275,7 +282,7 @@ function getSetting(name, initial) {
 
 function setSetting(name, value) {
   state.setting[name] = value;
-  switch(typeof value) {
+  switch(getSettingType(name)) {
     case "boolean":
       localStorage["rdm" + name] = value ? "on" : "off";
       break;
@@ -291,7 +298,7 @@ function setSetting(name, value) {
 }
 
 function syncSetting(name, value) {
-  switch(typeof value) {
+  switch(getSettingType(name)) {
     case "boolean":
       $(`[data-setting="${name}"]`).prop("checked", value);
       break;
@@ -307,7 +314,12 @@ function syncSetting(name, value) {
   }
 }
 
-function loadSetting(name, initial, hook) {
+function getSettingType(name) {
+  return settingTypes[name];
+}
+
+function loadSetting(name, initial, type, hook) {
   settingHooks[name] = hook;
+  settingTypes[name] = type;
   syncSetting(name, getSetting(name, initial));
 }

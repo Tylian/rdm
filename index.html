@@ -190,7 +190,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -200,37 +200,54 @@
             <label class="form-check-label">
               <input type="checkbox" id="hotkey" class="form-check-input" />
               Keybind Mode
-              <p class="form-text text-muted">
+              <small class="form-text text-muted">
                 When in Keybind Mode, you can click on an action and then press any key combination to bind that key combination to the selected action.
-              </p>
+              </small>
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label">
               <input type="checkbox" data-setting="realtime" class="form-check-input" checked />
               Realtime Mode
-              <p class="form-text text-muted">
+              <small class="form-text text-muted">
                 Time will paused after either the GCD or after casting to let you decide which action to use next.
-              </p>
+              </small>
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label">
               <input type="checkbox" data-setting="visualise" class="form-check-input" checked />
               Visualise
-              <p class="form-text text-muted">
+              <small class="form-text text-muted">
                 Displays a visualisation of your actions, with floating damage text.
-              </p>
+              </small>
             </label>
           </div>
           <div class="form-check">
             <label class="form-check-label">
               <input type="checkbox" data-setting="rangedmelee" class="form-check-input" checked />
               Disable Melee Check
-              <p class="form-text text-muted">
+              <small class="form-text text-muted">
                 Allows you to use melee attacks without using Corps-a-corps first.
-              </p>
+              </small>
             </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox" data-setting="tooltips" class="form-check-input" checked />
+              Show Tooltips
+              <small class="form-text text-muted">
+                Show action tooltips when hovering over action icons.
+              </small>
+            </label>
+          </div>
+          <hr />
+          <div class="form-group row">
+            <label class="col-2 col-form-label" for="gcd">GCD</label>
+            <div class="col-10">
+              <input id="gcd" class="form-control" type="number" class="form-control" step="0.01" min="0.5" max="10" value="2.50" data-setting="gcd">
+              <small class="form-text text-muted">Change the base GCD to simulate higher Spell Speeds.</small>
+            </div>
           </div>
         </div>
         <div class="modal-footer">

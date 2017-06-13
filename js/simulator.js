@@ -236,40 +236,50 @@ addTimer(() => {
   updateActions();
 }, 3000, true);
 
-loadSetting("realtime", true);
-loadSetting("visualise", true, function(value) {
+loadSetting("realtime", true, "boolean");
+loadSetting("visualise", true, "boolean", function(value) {
   $(".visualisation-wrapper").toggleClass("hidden", !value);
 });
-loadSetting("rangedmelee", false, function() {
+loadSetting("rangedmelee", false, "boolean", function() {
   updateActions();
+});
+loadSetting("gcd", 2.5, "number", function() {
+  updateActions();
+});
+loadSetting("tooltips", true, "boolean", function(value) {
+  if(!value) {
+    return $("body").tooltip("dispose");
+  }
+
+  $("body").tooltip({
+    selector: "[data-action]",
+    html: true,
+    title() {
+      const action = getAction($(this).data("action"));
+      var tooltip = "";
+      if(action.type == "ability") {
+        tooltip = `
+          <strong><u>${action.name}</u></strong> (${action.type})
+          <strong>Recast:</strong> ${action.recast.toFixed(2) + "s"}
+
+          ${action.description}`;
+      } else {
+        tooltip =`
+          <strong><u>${action.name}</u></strong> (${action.type})
+          <strong>Cast:</strong> ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}  <strong>Recast:</strong> ${action.recast.toFixed(2)}s ${action.type === "weaponskill" ? "" : "<br><strong>Mana Cost:</strong> " + action.mana}
+
+          ${action.description}`;
+      }
+      return tooltip.trim().replace(/\n/g, "<br />").replace(/^\s+/mg, "");
+    }
+  });
 });
 
 loadHotkeys(); // load hotkeys
 setGauge(0, 0); // reset state
 setMana(14400)
 updateActions();
-$("body").tooltip({
-  selector: "[data-action]",
-  html: true,
-  title() {
-    const action = getAction($(this).data("action"));
-    var tooltip = "";
-    if(action.type == "ability") {
-      tooltip = `
-        <strong><u>${action.name}</u></strong> (${action.type})
-        <strong>Cast:</strong> ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}
 
-        ${action.description}`;
-    } else {
-      tooltip =`
-        <strong><u>${action.name}</u></strong> (${action.type})
-        <strong>Cast:</strong> ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}  <strong>Recast:</strong> ${action.recast.toFixed(2)}s ${action.type === "weaponskill" ? "" : "<br><strong>Mana Cost:</strong> " + action.mana}
-
-        ${action.description}`;
-    }
-    return tooltip.trim().replace(/\n/g, "<br />").replace(/^\s+/mg, "");
-  }
-});
 requestAnimationFrame(timer); // start the animation-handling timer
 
 // Clicking on action buttons uses them (or sets them as the active skill in hotkey mode)
@@ -307,14 +317,26 @@ $("#hotkey").click(function(e) {
 });
 
 // Settings
-$("[data-setting]").click(function(e) {
-  setSetting($(this).data("setting"), $(this).is(":checked"));
+$("[data-setting]").change(function(e) {
+  var setting = $(this).data("setting");
+  switch(getSettingType(setting)) {
+    case "boolean":
+      setSetting(setting, $(this).is(":checked")); break;
+    case "number":
+      setSetting(setting, parseFloat($(this).val())); break;
+    case "string":
+      setSetting(setting, $(this).val()); break;
+  }
 });
 
 // Hotkey handler
 $(document).keydown(function(e) {
   // block shift, alt and ctrl
   if([16, 17, 18].includes(e.which))
+    return true;
+
+  // block when modal is open
+  if($('#settings').is(':visible'))
     return true;
 
   // esc - cancel cast
