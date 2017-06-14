@@ -79,7 +79,7 @@ const actions = {
     type: "spell",
     cast: 5,
     potency: 300,
-    mana: 600,
+    mana: 480,
     black: 11,
     description: `Deals thunder damage with a potency of 300.
     <span class="green">Additional Effect:</span> 50% chance of becoming <span class="yellow">Verfire Ready</span>.
@@ -95,7 +95,7 @@ const actions = {
     type: "spell",
     cast: 5,
     potency: 300,
-    mana: 600,
+    mana: 480,
     white: 11,
     description: `Deals wind damage with a potency of 300.
     <span class="green">Additional Effect:</span> 50% chance of becoming <span class="yellow">Verstone Ready</span>.
@@ -161,15 +161,15 @@ const actions = {
     cast: 0,
     comboPotency: 550,
     comboActions: ["enchanted_redoublement"],
-    mana: 840,
+    mana: 600,
     black: 21,
     description: `Deals fire damage with a potency of 550.
     <span class="green">Combo Action:</span> <span class="orange">Enchanted Redoublement</span>
     <span class="green">Additional Effect:</span> Increases <span class="yellow">Black Mana</span> by 21
-    <span class="green">Additional Effect:</span> 30% chance of becoming <span class="yellow">Verfire Ready</span>.
+    <span class="green">Additional Effect:</span> 20% chance of becoming <span class="yellow">Verfire Ready</span>.
     Chance to become <span class="yellow">Verfire Ready</span> increases to 100% if <span class="yellow">White Mana</span> is higher than <span class="yellow">Black Mana</span> at time of execution.`,
     execute(state) {
-      if(Math.random() < 0.3 || state.gauge.white > state.gauge.black)
+      if(Math.random() < 0.2 || state.gauge.white > state.gauge.black)
         setStatus('verfire', true);
     },
     useable(state) {
@@ -185,15 +185,15 @@ const actions = {
     cast: 0,
     comboPotency: 550,
     comboActions: ["enchanted_redoublement"],
-    mana: 840,
+    mana: 600,
     white: 21,
     description: `Deals unaspected damage with a potency of 550.
     <span class="green">Combo Action:</span> <span class="orange">Enchanted Redoublement</span>
     <span class="green">Additional Effect:</span> Increases <span class="yellow">White Mana</span> by 21
-    <span class="green">Additional Effect:</span> 30% chance of becoming <span class="yellow">Verstone Ready</span>.
+    <span class="green">Additional Effect:</span> 20% chance of becoming <span class="yellow">Verstone Ready</span>.
     Chance to become <span class="yellow">Verstone Ready</span> increases to 100% if <span class="yellow">Black Mana</span> is higher than <span class="yellow">White Mana</span> at time of execution.`,
     execute(state) {
-      if(Math.random() < 0.3 || state.gauge.black > state.gauge.white)
+      if(Math.random() < 0.2 || state.gauge.black > state.gauge.white)
         setStatus('verstone', true);
     },
     useable(state) {
