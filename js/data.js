@@ -316,7 +316,7 @@ const actions = {
     cast: 0,
     recast: 45,
     potency: 300,
-    description: "Deals unaspected damage with a potency of 300 to target and all enemies near it."
+    description: "Delivers an attack to all nearby enemies with a potency of 300 for the first enemy, 10% less for the second, 20% less for the third, 30% less for the fourth, 40% less for the fifth, and 50% less for all remaining enemies."
   },
 
   riposte: {
