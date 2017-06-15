@@ -169,7 +169,7 @@ const actions = {
     <span class="green">Additional Effect:</span> 30% chance of becoming <span class="yellow">Verfire Ready</span>.
     Chance to become <span class="yellow">Verfire Ready</span> increases to 100% if <span class="yellow">White Mana</span> is higher than <span class="yellow">Black Mana</span> at time of execution.`,
     execute(state) {
-      if(Math.random() < 0.3 || state.gauge.white > state.gauge.black)
+      if(Math.random() < 0.2 || state.gauge.white > state.gauge.black)
         setStatus('verfire', true);
     },
     useable(state) {
@@ -193,7 +193,7 @@ const actions = {
     <span class="green">Additional Effect:</span> 30% chance of becoming <span class="yellow">Verstone Ready</span>.
     Chance to become <span class="yellow">Verstone Ready</span> increases to 100% if <span class="yellow">Black Mana</span> is higher than <span class="yellow">White Mana</span> at time of execution.`,
     execute(state) {
-      if(Math.random() < 0.3 || state.gauge.black > state.gauge.white)
+      if(Math.random() < 0.2 || state.gauge.black > state.gauge.white)
         setStatus('verstone', true);
     },
     useable(state) {
@@ -265,16 +265,16 @@ const actions = {
     <span class="green">Duration:</span> 20s`,
     execute(state) {
       function lower() {
-        state.emboldenDamage -= 0.04;
+        state.emboldenDamage -= 0.02;
         if(state.emboldenDamage > 0) {
           addTimer(lower, 4000);
         } else {
           state.emboldenDamage = 0;
         }
-        $("[data-status=\"embolden\"] img").prop("src", `img/status/embolden${Math.floor(state.emboldenDamage / 0.04) + 1}.png`)
+        $("[data-status=\"embolden\"] img").prop("src", `img/status/embolden${Math.floor(state.emboldenDamage / 0.02) + 1}.png`)
       }
 
-      state.emboldenDamage = 0.24;
+      state.emboldenDamage = 0.12;
       lower();
       setStatus("embolden", true);
     }
