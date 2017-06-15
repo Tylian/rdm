@@ -128,7 +128,7 @@ function useAction(name) {
 
     // update UI
     $(".rdm").prop("src", "img/visualisation/Red_mage.png");
-    setMana(state.mana - action.mana);
+    setMana(state.mana - calculateManaCost(action.mana));
     setGauge(state.gauge.black + black, state.gauge.white + white);
     updateActions();
   }, castTime * 1000);
@@ -267,7 +267,7 @@ loadSetting("tooltips", true, "boolean", function(value) {
       } else {
         tooltip =`
           <strong><u>${action.name}</u></strong> (${action.type})
-          <strong>Cast:</strong> ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}  <strong>Recast:</strong> ${action.recast.toFixed(2)}s ${action.type === "weaponskill" ? "" : "<br><strong>Mana Cost:</strong> " + action.mana}
+          <strong>Cast:</strong> ${action.cast == 0 ? "Instant" : action.cast.toFixed(2) + "s"}  <strong>Recast:</strong> ${action.recast.toFixed(2)}s ${action.type === "weaponskill" ? "" : "<br><strong>Mana Cost:</strong> " + calculateManaCost(action.mana)}
 
           ${action.description}`;
       }

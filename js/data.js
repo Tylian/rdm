@@ -44,7 +44,7 @@ const actions = {
     name: "Jolt II",
     type: "spell",
     potency: 240,
-    mana: 360,
+    mana: 3,
     black: 3,
     white: 3,
     description: `Deals unaspected damage with a potency of 240.
@@ -58,7 +58,7 @@ const actions = {
     name: "Impact",
     type: "spell",
     potency: 270,
-    mana: 360,
+    mana: 3,
     white: 4,
     black: 4,
     description: `Deals unaspected damage with a potency of 270.
@@ -79,7 +79,7 @@ const actions = {
     type: "spell",
     cast: 5,
     potency: 300,
-    mana: 480,
+    mana: 4,
     black: 11,
     description: `Deals thunder damage with a potency of 300.
     <span class="green">Additional Effect:</span> 50% chance of becoming <span class="yellow">Verfire Ready</span>.
@@ -95,7 +95,7 @@ const actions = {
     type: "spell",
     cast: 5,
     potency: 300,
-    mana: 480,
+    mana: 4,
     white: 11,
     description: `Deals wind damage with a potency of 300.
     <span class="green">Additional Effect:</span> 50% chance of becoming <span class="yellow">Verstone Ready</span>.
@@ -111,7 +111,7 @@ const actions = {
     type: "spell",
     cast: 2,
     potency: 270,
-    mana: 360,
+    mana: 3,
     black: 9,
     description: `Deals fire damage with a potency of 270.
     <span class="green">Additional Effect:</span> Increases <span class="yellow">Black Mana</span> by 9.
@@ -131,7 +131,7 @@ const actions = {
     type: "spell",
     cast: 2,
     potency: 270,
-    mana: 360,
+    mana: 3,
     white: 9,
     description: `Deals earth damage with a potency of 270.
     <span class="green">Additional Effect:</span> Increases <span class="yellow">White Mana</span> by 9.
@@ -150,7 +150,7 @@ const actions = {
     name: "Vercure",
     type: "spell",
     cast: 2,
-    mana: 600,
+    mana: 5,
     white: 0,
     description: `Restores target HP.
     <span class="green">Cure potency:</span> 350`,
@@ -161,7 +161,7 @@ const actions = {
     cast: 0,
     comboPotency: 550,
     comboActions: ["enchanted_redoublement"],
-    mana: 600,
+    mana: 5,
     black: 21,
     description: `Deals fire damage with a potency of 550.
     <span class="green">Combo Action:</span> <span class="orange">Enchanted Redoublement</span>
@@ -185,7 +185,7 @@ const actions = {
     cast: 0,
     comboPotency: 550,
     comboActions: ["enchanted_redoublement"],
-    mana: 600,
+    mana: 5,
     white: 21,
     description: `Deals unaspected damage with a potency of 550.
     <span class="green">Combo Action:</span> <span class="orange">Enchanted Redoublement</span>

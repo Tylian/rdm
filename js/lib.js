@@ -19,6 +19,12 @@ function setMelee(active) {
   $(".rdm").toggleClass("melee", active);
 }
 
+// Calculate mana cost from base value
+function calculateManaCost(cost) {
+  const scalingFactor = 12000;
+  return Math.floor(cost * scalingFactor / 100);
+}
+
 // sets the current mana and updates UI
 function setMana(mana) {
   state.mana = Math.min(mana, state.maxMana);
@@ -166,7 +172,7 @@ function actionUsable(key) {
     return false;
 
   // not enough mana
-  if(action.mana > state.mana)
+  if(calculateManaCost(action.mana) > state.mana)
     return false;
 
   // check action specific stuff
