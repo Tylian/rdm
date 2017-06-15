@@ -261,7 +261,7 @@ const actions = {
     type: "ability",
     cast: 0,
     recast: 120,
-    description: `Increases own magic damage delt by 20% and physical damage delt by nearby party members by 10%. Both effects are reduced by 20% every 4s.
+    description: `Increases own magic damage delt by 10% and physical damage delt by nearby party members by 10%. Both effects are reduced by 20% every 4s.
     <span class="green">Duration:</span> 20s`,
     execute(state) {
       function lower() {
